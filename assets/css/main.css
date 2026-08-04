@@ -19,11 +19,28 @@ body {
   padding: clamp(2rem, 5vw, 5rem);
   background: radial-gradient(circle at 15% 0, #22283a, #0b0e14 42%);
 }
-header {
+.admin-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 2rem;
+}
+.admin-nav {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.8rem;
+}
+.admin-nav a {
+  color: #98a2b3;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.admin-nav a:hover,
+.admin-nav a.router-link-active {
+  color: #d4c8ff;
+}
+.page-content {
+  margin-top: clamp(3rem, 8vw, 6rem);
 }
 .eyebrow {
   color: #b9a2ff;
@@ -37,7 +54,7 @@ h1 {
   font-weight: 300;
 }
 @media (max-width: 800px) {
-  header {
+  .admin-header {
     flex-direction: column;
   }
 }
