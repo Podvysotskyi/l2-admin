@@ -26,6 +26,7 @@ let requestVersion = 0
 
 const columns: TableColumn<AccountRecord>[] = [
   { accessorKey: 'username', header: 'Player' },
+  { accessorKey: 'email', header: 'Login email' },
   { accessorKey: 'id', header: 'Account ID' },
   { accessorKey: 'createdAt', header: 'Registered' },
   { accessorKey: 'lastSuccessfulLoginAt', header: 'Last sign-in' },
@@ -141,15 +142,16 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
         <div>
           <p class="text-sm font-medium text-highlighted">Account directory</p>
           <p class="text-xs text-muted">
-            {{ result?.total.toLocaleString() ?? 0 }} registered players
+            {{ result?.total.toLocaleString() ?? 0 }} registered
+            {{ result?.total === 1 ? 'player' : 'players' }}
           </p>
         </div>
         <UInput
           v-model="query"
           icon="i-lucide-search"
-          placeholder="Search username"
-          aria-label="Search username"
-          maxlength="24"
+          placeholder="Search username or email"
+          aria-label="Search username or email"
+          maxlength="254"
           class="w-full sm:w-80"
         />
       </div>
@@ -178,6 +180,9 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
             <code class="text-xs text-muted" :title="row.original.id">
               {{ row.original.id }}
             </code>
+          </template>
+          <template #email-cell="{ row }">
+            <span class="text-sm text-muted">{{ row.original.email }}</span>
           </template>
           <template #createdAt-cell="{ row }">
             <span class="text-sm">{{
