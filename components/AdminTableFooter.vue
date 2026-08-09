@@ -2,12 +2,16 @@
 import { computed } from 'vue'
 import { paginationRange } from '../lib/admin-api'
 
-const props = defineProps<{
-  page: number
-  pageSize: number
-  total: number
-  pageSizeOptions?: number[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    page: number
+    pageSize: number
+    total: number
+    pageSizeOptions?: number[]
+    emptyLabel?: string
+  }>(),
+  { pageSizeOptions: () => [10, 25, 50, 100], emptyLabel: 'No accounts' }
+)
 const emit = defineEmits<{
   'update:page': [value: number]
   'update:pageSize': [value: number]
@@ -34,7 +38,7 @@ const range = computed(() =>
       <template v-if="total > 0">
         Showing {{ range.first }}–{{ range.last }} of {{ total }}
       </template>
-      <template v-else>No accounts</template>
+      <template v-else>{{ emptyLabel }}</template>
     </p>
 
     <div class="flex flex-wrap items-center justify-end gap-3">
@@ -43,7 +47,7 @@ const range = computed(() =>
         <USelect
           v-model="pageSizeModel"
           aria-label="Rows per page"
-          :items="pageSizeOptions ?? [10, 25, 50, 100]"
+          :items="pageSizeOptions"
           size="sm"
           class="w-20"
         />

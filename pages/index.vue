@@ -2,8 +2,10 @@
 import { computed } from 'vue'
 import {
   accountDirectoryUrl,
+  characterDirectoryUrl,
   systemInfoUrl,
   type AccountPage,
+  type CharacterPage,
   type SystemInfo
 } from '../lib/admin-api'
 
@@ -11,6 +13,7 @@ const config = useRuntimeConfig()
 const loading = ref(true)
 const error = ref<string>()
 const accountCount = ref(0)
+const characterCount = ref(0)
 const systemInfo = ref<SystemInfo>()
 
 const metrics = computed(() => [
@@ -22,11 +25,18 @@ const metrics = computed(() => [
     color: 'text-primary'
   },
   {
+    label: 'Player characters',
+    value: characterCount.value.toLocaleString(),
+    detail: 'All persisted character rows',
+    icon: 'i-lucide-contact-round',
+    color: 'text-info'
+  },
+  {
     label: 'API environment',
     value: systemInfo.value?.environment ?? '—',
     detail: systemInfo.value?.service ?? 'Awaiting Admin API',
     icon: 'i-lucide-server-cog',
-    color: 'text-info'
+    color: 'text-warning'
   },
   {
     label: 'Build version',
@@ -41,17 +51,21 @@ async function loadDashboard() {
   loading.value = true
   error.value = undefined
   try {
-    const [info, accounts] = await Promise.all([
+    const [info, accounts, characters] = await Promise.all([
       $fetch<SystemInfo>(systemInfoUrl(config.public.apiBase)),
       $fetch<AccountPage>(
         accountDirectoryUrl(config.public.apiBase, { page: 1, pageSize: 1 })
+      ),
+      $fetch<CharacterPage>(
+        characterDirectoryUrl(config.public.apiBase, { page: 1, pageSize: 1 })
       )
     ])
     systemInfo.value = info
     accountCount.value = accounts.total
+    characterCount.value = characters.total
   } catch {
     error.value =
-      'Operational data could not be loaded. The account directory is available only in Development until administrator authentication is implemented.'
+      'Operational data could not be loaded. Player directories are available only in Development until administrator authentication is implemented.'
   } finally {
     loading.value = false
   }
@@ -65,7 +79,7 @@ onMounted(loadDashboard)
     <AdminPageHeader
       eyebrow="Live operations"
       title="Operations dashboard"
-      description="Monitor the administrative surface and inspect player identity data exposed by the development Admin API."
+      description="Monitor the administrative surface and inspect player identity and character data exposed by the development Admin API."
       icon="i-lucide-gauge"
     >
       <template #actions>
@@ -113,7 +127,7 @@ onMounted(loadDashboard)
         </h2>
         <UBadge color="neutral" variant="subtle">Read only</UBadge>
       </div>
-      <div class="grid gap-4 md:grid-cols-3">
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <UCard
           v-for="metric in metrics"
           :key="metric.label"
@@ -142,7 +156,7 @@ onMounted(loadDashboard)
       </div>
     </section>
 
-    <div class="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]">
+    <div class="grid gap-4 lg:grid-cols-3">
       <UCard>
         <template #header>
           <div class="flex items-center gap-3">
@@ -166,6 +180,35 @@ onMounted(loadDashboard)
           <UButton
             to="/accounts"
             label="Open account directory"
+            trailing-icon="i-lucide-arrow-right"
+            class="self-start"
+          />
+        </div>
+      </UCard>
+
+      <UCard>
+        <template #header>
+          <div class="flex items-center gap-3">
+            <UIcon name="i-lucide-contact-round" class="size-5 text-info" />
+            <div>
+              <h2 class="text-sm font-semibold text-highlighted">
+                Player character directory
+              </h2>
+              <p class="text-xs text-muted">
+                Search ownership and progression metadata
+              </p>
+            </div>
+          </div>
+        </template>
+        <div class="flex min-h-44 flex-col justify-between gap-6">
+          <p class="text-sm leading-6 text-muted">
+            Inspect all persisted characters, including pending and expired
+            deletions, with resolved race, sex, class, level, and experience
+            details.
+          </p>
+          <UButton
+            to="/characters"
+            label="Open character directory"
             trailing-icon="i-lucide-arrow-right"
             class="self-start"
           />

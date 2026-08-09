@@ -23,11 +23,20 @@ const navigation: NavigationMenuItem[] = [
     label: 'Accounts',
     icon: 'i-lucide-users-round',
     to: '/accounts'
+  },
+  {
+    label: 'Characters',
+    icon: 'i-lucide-contact-round',
+    to: '/characters'
   }
 ]
 
 const routeTitle = computed(() =>
-  route.path === '/accounts' ? 'Player accounts' : 'Operations dashboard'
+  route.path === '/accounts'
+    ? 'Player accounts'
+    : route.path === '/characters'
+      ? 'Player characters'
+      : 'Operations dashboard'
 )
 const statusColor = computed<'success' | 'error' | 'neutral'>(() =>
   serviceState.value === 'connected'
