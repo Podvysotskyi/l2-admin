@@ -1,0 +1,12 @@
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/bin/Debug/net10.0/L2.Admin.Contracts.deps.json
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/bin/Debug/net10.0/L2.Admin.Contracts.dll
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/bin/Debug/net10.0/L2.Admin.Contracts.pdb
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/L2.Admin.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/L2.Admin.Contracts.AssemblyInfoInputs.cache
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/L2.Admin.Contracts.AssemblyInfo.cs
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/L2.Admin.Contracts.csproj.CoreCompileInputs.cache
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/L2.Admin.Contracts.sourcelink.json
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/L2.Admin.Contracts.dll
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/refint/L2.Admin.Contracts.dll
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/L2.Admin.Contracts.pdb
+/home/serhii/Workspace/L2/.split/l2-admin/server/L2.Admin.Contracts/obj/Debug/net10.0/ref/L2.Admin.Contracts.dll

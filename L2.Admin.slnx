@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/server/">
+    <Project Path="server/L2.Admin.Contracts/L2.Admin.Contracts.csproj" />
+  </Folder>
+</Solution>
