@@ -1,11 +1,8 @@
 using L2.Admin.Configurations;
-using L2.Admin.Configurations.HealthChecks;
 using L2.Admin.Repositories;
 using L2.Admin.Repositories.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using Npgsql;
 
 namespace L2.Admin.Configurations.Tests;
@@ -25,7 +22,7 @@ public sealed class AdminRepositoryConfigurationExtensionsTests
     }
 
     [Fact]
-    public void AddAdminRepositories_registers_repositories_and_postgresql_health_check()
+    public void AddAdminRepositories_registers_repositories()
     {
         var services = new ServiceCollection();
         var configuration = new ConfigurationBuilder()
@@ -46,14 +43,5 @@ public sealed class AdminRepositoryConfigurationExtensionsTests
             provider.GetRequiredService<IAccountDirectoryRepository>());
         Assert.IsType<CharacterDirectoryRepository>(
             provider.GetRequiredService<ICharacterDirectoryRepository>());
-        Assert.IsType<PostgreSqlConnectionProbe>(
-            provider.GetRequiredService<IPostgreSqlConnectionProbe>());
-
-        var healthCheck = Assert.Single(provider
-            .GetRequiredService<IOptions<HealthCheckServiceOptions>>()
-            .Value
-            .Registrations);
-        Assert.Equal("postgresql", healthCheck.Name);
-        Assert.Contains("ready", healthCheck.Tags);
     }
 }

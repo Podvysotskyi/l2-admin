@@ -9,8 +9,6 @@ namespace L2.Admin.Configurations;
 
 public static class AdminApiConfigurationExtensions
 {
-    private const string ReadinessTag = "ready";
-
     public static WebApplicationBuilder AddAdminApi(
         this WebApplicationBuilder builder,
         string serviceName)
@@ -43,10 +41,6 @@ public static class AdminApiConfigurationExtensions
         app.MapHealthChecks("/health/live", new HealthCheckOptions
         {
             Predicate = _ => false
-        });
-        app.MapHealthChecks("/health/ready", new HealthCheckOptions
-        {
-            Predicate = registration => registration.Tags.Contains(ReadinessTag)
         });
         app.MapControllers();
         return app;

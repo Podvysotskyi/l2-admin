@@ -45,7 +45,7 @@ public sealed class AdminApiConfigurationExtensionsTests
     }
 
     [Fact]
-    public async Task MapAdminApi_maps_live_and_ready_health_endpoints()
+    public async Task MapAdminApi_maps_live_health_endpoint()
     {
         var builder = CreateBuilder();
         builder.AddAdminApi("l2-admin-api");
@@ -60,7 +60,7 @@ public sealed class AdminApiConfigurationExtensionsTests
             .Select(endpoint => endpoint.RoutePattern.RawText)
             .ToArray();
         Assert.Contains("/health/live", routes);
-        Assert.Contains("/health/ready", routes);
+        Assert.DoesNotContain("/health/ready", routes);
     }
 
     private static WebApplicationBuilder CreateBuilder() =>

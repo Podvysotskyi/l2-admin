@@ -1,19 +1,21 @@
-import { fileURLToPath } from 'node:url'
+const adminApiBase = process.env.NUXT_ADMIN_API_BASE?.replace(/\/$/, '')
+
+if (!adminApiBase) {
+  throw new Error('NUXT_ADMIN_API_BASE is required')
+}
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
+
   modules: ['@nuxt/ui', '@pinia/nuxt'],
-  dir: {
-    public:
-      process.env.L2_PUBLIC_ASSETS_DIR ??
-      fileURLToPath(new URL('./public', import.meta.url))
-  },
+  css: ['~/assets/css/main.css'],
+
   routeRules: {
     '/api/**': {
-      proxy: `${process.env.NUXT_ADMIN_API_BASE ?? 'http://localhost:5201'}/api/**`
+      proxy: `${adminApiBase}/api/**`
     }
   },
+
   typescript: { typeCheck: true }
 })

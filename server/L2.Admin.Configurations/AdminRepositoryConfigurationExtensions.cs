@@ -1,4 +1,3 @@
-using L2.Admin.Configurations.HealthChecks;
 using L2.Admin.Repositories;
 using L2.Admin.Repositories.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -19,9 +18,6 @@ public static class AdminRepositoryConfigurationExtensions
         services.AddSingleton<TimeProvider>(TimeProvider.System);
         services.AddSingleton<IAccountDirectoryRepository, AccountDirectoryRepository>();
         services.AddSingleton<ICharacterDirectoryRepository, CharacterDirectoryRepository>();
-        services.AddSingleton<IPostgreSqlConnectionProbe, PostgreSqlConnectionProbe>();
-        services.AddHealthChecks()
-            .AddCheck<PostgreSqlHealthCheck>("postgresql", tags: ["ready"]);
         return services;
     }
 }

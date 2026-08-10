@@ -6,13 +6,9 @@ services:
     build:
       context: .
       dockerfile: server/Dockerfile
-      args:
-        PROJECT: server/L2.Admin.Api/L2.Admin.Api.csproj
-    command: [L2.Admin.Api.dll]
+      target: production
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:8080
-      ConnectionStrings__PostgreSql: ${GAME_SERVER_DATABASE_CONNECTION_STRING:?Set GAME_SERVER_DATABASE_CONNECTION_STRING in .env}
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     healthcheck:
@@ -21,7 +17,7 @@ services:
           'CMD',
           'bash',
           '-c',
-          'exec 3<>/dev/tcp/127.0.0.1/8080 && printf "GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3 && grep --quiet "^HTTP/1.1 200" <&3'
+          'exec 3<>/dev/tcp/127.0.0.1/8080 && printf "GET /health/live HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3 && grep --quiet "^HTTP/1.1 200" <&3'
         ]
       interval: 5s
       timeout: 3s
@@ -33,8 +29,12 @@ services:
     image: ${L2_ADMIN_IMAGE:-l2-admin:dev}
     build:
       context: ./web
+      target: development
+      args:
+        APP_ENV: development
     environment:
-      NUXT_ADMIN_API_BASE: http://admin-api:8080
+      NODE_ENV: development
+    init: true
     ports:
       - '127.0.0.1:${ADMIN_WEB_PORT:-3002}:3002'
     depends_on:

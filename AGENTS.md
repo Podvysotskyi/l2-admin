@@ -2,21 +2,53 @@
 
 ## Scope
 
-This repository owns the Admin Nuxt frontend and the Admin API, Configurations, Contracts, Exceptions, Repositories.Interfaces, and Repositories projects. Server-owned identity, character, and content persistence remain outside this repository.
+This repository owns the internal L2 Admin product: the Nuxt web application, ASP.NET Core API, configuration composition, API contracts, repository interfaces and implementations, and Admin-specific exceptions. Login Server, Game Server, identity, character authority, database migrations, and PostgreSQL provisioning remain outside this repository.
+
+The Admin service reads the external Game Server database. It does not own a database, migrations, or authoritative gameplay state.
 
 ## Commands
 
+Run development, every check, and every build through Docker from the repository root:
+
 ```sh
-cd web && npm ci
-cd web && npm test
-cd web && npm run typecheck
-cd web && npm run build
-dotnet build server/L2.Admin.slnx
-dotnet test server/L2.Admin.slnx --no-build
+docker build --target validate --tag l2-admin-web-validate web
+docker build --target validate --file server/Dockerfile --tag l2-admin-api-validate .
+docker run --rm --volume "$PWD:/workspace" --workdir /workspace docker:29-cli compose config
+docker compose build
 ```
 
-Run the Admin-only development stack with this repository's `compose.yaml`; use the root `compose.yaml` in the `l2-infra` integration repository for the combined product stack.
+Do not run development, checks, or builds with host-installed Node.js, npm, or .NET tooling.
+
+Run the Admin-only development stack from this repository with `docker compose up --build`. Admin is intentionally absent from the root `l2-infra` Compose stack.
+
+## Server Architecture
+
+- `L2.Admin.Api` owns controllers, action-filter validation, and HTTP composition. Keep controllers thin.
+- `L2.Admin.Configurations` owns dependency registration, CORS, service identity, and the process-level `/health/live` endpoint.
+- `L2.Admin.Contracts` groups public DTOs by type under `Models`, `Requests`, and `Responses`.
+- `L2.Admin.Repositories.Interfaces` owns repository abstractions.
+- `L2.Admin.Repositories` owns SqlKata queries and internal database row contracts. Keep repository implementations at the project root and row contracts under `Contracts`.
+- `L2.Admin.Exceptions` owns Admin-specific exception types.
+- API, configuration, and repository test projects contain unit tests. Repository tests must not require a database connection.
+
+Use SqlKata for all repository SQL construction. Do not import Server entities, `DbContext` types, migrations, or implementation projects. Every record, interface, and class belongs in its own `.cs` file.
+
+## Web Architecture
+
+Follow the Nuxt 4 directory structure under `web/app`. Pages own store wiring, route synchronization, loading, and composition. Reusable shell components live under `components/app`; substantial page sections live under `components/pages/<page>`.
+
+All browser API calls go through the Nuxt `/api` proxy and the service layer. Do not call the Admin API directly from pages or components. Pinia stores use Setup Store syntax; expose state refs directly and reserve computed values for genuinely derived state. Avoid trivial setter actions.
+
+Organize tests under `web/test/unit`, `web/test/nuxt`, and `web/test/e2e`. Keep pure state, service, and utility tests in `unit`.
+
+## Configuration
+
+`NUXT_ADMIN_API_BASE` is required whenever Nuxt configuration loads. Docker Compose selects the `development` target and `APP_ENV=development`; the published workflow selects the `production` target and `APP_ENV=production`. `APP_ENV` chooses the checked-in Nuxt build configuration, while `NODE_ENV` describes the running Node.js process.
+
+Web and server workflows validate independently on pull requests and `main`. Only pushed `v*` tags publish either GHCR image; manual workflow runs never publish.
+
+Environment-specific database configuration belongs in the matching `server/L2.Admin.Api/appsettings.<Environment>.json`. Environment variables may override it through standard ASP.NET Core configuration. Never commit administrator credentials, tokens, or original game files.
 
 ## Conventions
 
-Use UTF-8, LF endings, two-space indentation, single quotes, no semicolons, and no trailing commas. Keep the server-side API upstream configurable through `NUXT_ADMIN_API_BASE`. Never place administrative credentials or tokens in frontend code.
+Use UTF-8 and LF endings. TypeScript and Vue use two-space indentation, single quotes, no semicolons, and no trailing commas. Preserve established C# formatting and nullable-reference-type safety.

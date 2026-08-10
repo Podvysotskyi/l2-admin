@@ -3,8 +3,7 @@ node_modules/
 .output/
 coverage/
 .env
-.env.*
-!.env.example
+!web/.env.development
 assets/*
 !web/assets/README.md
 *.log
