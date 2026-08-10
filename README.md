@@ -7,7 +7,6 @@ The L2 Admin product: a Nuxt web interface and a .NET Admin API for live operati
 - Node.js 22.13 or newer
 - npm
 - A GitHub Packages token with `read:packages` access, set as `NODE_AUTH_TOKEN`
-- Admin API running at the configured endpoint
 
 ## Local development
 
@@ -26,7 +25,7 @@ NUXT_PUBLIC_ADMIN_API_BASE=http://localhost:5201 npm run dev
 
 ## Docker Compose
 
-Run the repository-local Compose stack:
+Run PostgreSQL, the Admin API, and the Admin web application:
 
 ```sh
 docker compose up --build
