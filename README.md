@@ -25,12 +25,13 @@ NUXT_PUBLIC_ADMIN_API_BASE=http://localhost:5201 npm run dev
 
 ## Docker Compose
 
+Container orchestration is owned by [`l2-infra`](https://github.com/Podvysotskyi/l2-infra). From that repository, run:
+
 ```sh
-export NODE_AUTH_TOKEN="$(gh auth token)"
-docker compose up --build
+docker compose -f compose/admin.yaml up --build
 ```
 
-Compose mounts any reviewed derived browser assets from the ignored `assets/` directory. Do not commit original game files.
+Do not commit original game files.
 
 ## Checks
 
