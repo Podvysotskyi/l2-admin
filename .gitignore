@@ -8,3 +8,5 @@ coverage/
 assets/*
 !assets/README.md
 *.log
+bin/
+obj/
