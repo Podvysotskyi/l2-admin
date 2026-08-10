@@ -1,5 +1,5 @@
 {
-  "name": "@l2/admin",
+  "name": "@l2/admin-web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@l2/ui": "workspace:*",
+    "@podvysotskyi/l2-ui": "0.1.1",
     "@nuxt/ui": "4.10.0",
     "@pinia/nuxt": "^0.11.0",
     "echarts": "^6.0.0",
