@@ -25,10 +25,10 @@ NUXT_PUBLIC_ADMIN_API_BASE=http://localhost:5201 npm run dev
 
 ## Docker Compose
 
-Run PostgreSQL, the Admin API, and the Admin web application:
+The combined development model lives in the `l2-infra` repository. From its root, run PostgreSQL, the Admin API, and the Admin web application:
 
 ```sh
-docker compose up --build
+docker compose up --build admin-api admin
 ```
 
 Do not commit original game files.

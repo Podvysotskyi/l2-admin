@@ -14,7 +14,7 @@ cd web && npm run build
 dotnet build server/L2.Admin.slnx
 ```
 
-Use `NODE_AUTH_TOKEN` for private package installation. Container orchestration is defined by the repository-local `compose.yaml`.
+Use `NODE_AUTH_TOKEN` for private package installation. Container orchestration is defined by the root `compose.yaml` in the `l2-infra` integration repository.
 
 ## Conventions
 
