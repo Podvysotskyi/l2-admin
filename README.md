@@ -6,6 +6,8 @@ Internal administration product for L2 live operations. It combines a Nuxt web i
 
 The API is split into focused .NET projects:
 
+- `server/src` — production projects
+- `server/tests` — database-free server unit-test projects
 - `L2.Admin.Api` — controllers, request filters, and HTTP endpoints
 - `L2.Admin.Configurations` — service registration, CORS, service identity, and liveness
 - `L2.Admin.Contracts` — models, requests, and responses
@@ -43,7 +45,7 @@ docker compose up --build
 
 Compose starts `admin-api` and `admin`. Only the Admin UI publishes a host port. Compose selects `APP_ENV=development`; the web image loads `web/.env.development`, which points the Nuxt proxy at `http://admin-api:8080` inside the Compose network.
 
-The API container uses `server/L2.Admin.Api/appsettings.Development.json` and the .NET image default port `8080`. Override `ConnectionStrings__PostgreSql` when the external database differs from the checked-in development value. Its Compose health check calls `/health/live` and does not query PostgreSQL. The Admin stack remains intentionally separate from the root `l2-infra` Compose model.
+The API container uses `server/src/L2.Admin.Api/appsettings.Development.json` and the .NET image default port `8080`. Override `ConnectionStrings__PostgreSql` when the external database differs from the checked-in development value. Its Compose health check calls `/health/live` and does not query PostgreSQL. The Admin stack remains intentionally separate from the root `l2-infra` Compose model.
 
 The Nuxt server proxies all browser `/api` requests to the Admin API. Browser code never calls the upstream API directly.
 

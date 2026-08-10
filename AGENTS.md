@@ -23,6 +23,7 @@ Run the Admin-only development stack from this repository with `docker compose u
 
 ## Server Architecture
 
+- Production projects live under `server/src`; server test projects live under `server/tests`. Keep shared build properties, package versions, the solution, and the Dockerfile at `server/`.
 - `L2.Admin.Api` owns controllers, action-filter validation, and HTTP composition. Keep controllers thin.
 - `L2.Admin.Configurations` owns dependency registration, CORS, service identity, and the process-level `/health/live` endpoint.
 - `L2.Admin.Contracts` groups public DTOs by type under `Models`, `Requests`, and `Responses`.
@@ -47,7 +48,7 @@ Organize tests under `web/test/unit`, `web/test/nuxt`, and `web/test/e2e`. Keep 
 
 Web and server workflows validate independently on pull requests and `main`. Only pushed `v*` tags publish either GHCR image; manual workflow runs never publish.
 
-Environment-specific database configuration belongs in the matching `server/L2.Admin.Api/appsettings.<Environment>.json`. Environment variables may override it through standard ASP.NET Core configuration. Never commit administrator credentials, tokens, or original game files.
+Environment-specific database configuration belongs in the matching `server/src/L2.Admin.Api/appsettings.<Environment>.json`. Environment variables may override it through standard ASP.NET Core configuration. Never commit administrator credentials, tokens, or original game files.
 
 ## Conventions
 

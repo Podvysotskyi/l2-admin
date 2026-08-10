@@ -10,7 +10,7 @@ on:
       - web/.dockerignore
       - web/.env.development
       - server/Dockerfile
-      - server/L2.Admin.Api/appsettings.Development.json
+      - server/src/L2.Admin.Api/appsettings.Development.json
       - .github/workflows/compose.yml
   push:
     branches: [main]
@@ -21,7 +21,7 @@ on:
       - web/.dockerignore
       - web/.env.development
       - server/Dockerfile
-      - server/L2.Admin.Api/appsettings.Development.json
+      - server/src/L2.Admin.Api/appsettings.Development.json
       - .github/workflows/compose.yml
   workflow_dispatch:
 

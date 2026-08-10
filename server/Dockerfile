@@ -4,15 +4,15 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0.102 AS restore
 WORKDIR /workspace
 COPY global.json ./
 COPY server/Directory.Build.props server/Directory.Packages.props server/L2.Admin.slnx server/
-COPY server/L2.Admin.Api/L2.Admin.Api.csproj server/L2.Admin.Api/
-COPY server/L2.Admin.Api.Tests/L2.Admin.Api.Tests.csproj server/L2.Admin.Api.Tests/
-COPY server/L2.Admin.Configurations/L2.Admin.Configurations.csproj server/L2.Admin.Configurations/
-COPY server/L2.Admin.Configurations.Tests/L2.Admin.Configurations.Tests.csproj server/L2.Admin.Configurations.Tests/
-COPY server/L2.Admin.Contracts/L2.Admin.Contracts.csproj server/L2.Admin.Contracts/
-COPY server/L2.Admin.Exceptions/L2.Admin.Exceptions.csproj server/L2.Admin.Exceptions/
-COPY server/L2.Admin.Repositories.Interfaces/L2.Admin.Repositories.Interfaces.csproj server/L2.Admin.Repositories.Interfaces/
-COPY server/L2.Admin.Repositories/L2.Admin.Repositories.csproj server/L2.Admin.Repositories/
-COPY server/L2.Admin.Repositories.Tests/L2.Admin.Repositories.Tests.csproj server/L2.Admin.Repositories.Tests/
+COPY server/src/L2.Admin.Api/L2.Admin.Api.csproj server/src/L2.Admin.Api/
+COPY server/src/L2.Admin.Configurations/L2.Admin.Configurations.csproj server/src/L2.Admin.Configurations/
+COPY server/src/L2.Admin.Contracts/L2.Admin.Contracts.csproj server/src/L2.Admin.Contracts/
+COPY server/src/L2.Admin.Exceptions/L2.Admin.Exceptions.csproj server/src/L2.Admin.Exceptions/
+COPY server/src/L2.Admin.Repositories.Interfaces/L2.Admin.Repositories.Interfaces.csproj server/src/L2.Admin.Repositories.Interfaces/
+COPY server/src/L2.Admin.Repositories/L2.Admin.Repositories.csproj server/src/L2.Admin.Repositories/
+COPY server/tests/L2.Admin.Api.Tests/L2.Admin.Api.Tests.csproj server/tests/L2.Admin.Api.Tests/
+COPY server/tests/L2.Admin.Configurations.Tests/L2.Admin.Configurations.Tests.csproj server/tests/L2.Admin.Configurations.Tests/
+COPY server/tests/L2.Admin.Repositories.Tests/L2.Admin.Repositories.Tests.csproj server/tests/L2.Admin.Repositories.Tests/
 RUN dotnet restore server/L2.Admin.slnx
 
 FROM restore AS build
@@ -22,7 +22,7 @@ RUN dotnet build server/L2.Admin.slnx --configuration Release --no-restore -m:1
 
 FROM build AS publish
 
-RUN dotnet publish server/L2.Admin.Api/L2.Admin.Api.csproj \
+RUN dotnet publish server/src/L2.Admin.Api/L2.Admin.Api.csproj \
     --configuration Release \
     --no-restore \
     --output /app/publish \
