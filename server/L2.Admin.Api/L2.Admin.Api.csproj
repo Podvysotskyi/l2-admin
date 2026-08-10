@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-  </PropertyGroup>
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../L2.Admin.Foundation/L2.Admin.Foundation.csproj" />
+    <ProjectReference Include="../L2.Admin.ReadModel/L2.Admin.ReadModel.csproj" />
+  </ItemGroup>
 </Project>

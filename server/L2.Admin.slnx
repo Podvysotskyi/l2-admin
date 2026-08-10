@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="L2.Admin.Api.Tests/L2.Admin.Api.Tests.csproj" />
   <Project Path="L2.Admin.Api/L2.Admin.Api.csproj" />
+  <Project Path="L2.Admin.Foundation/L2.Admin.Foundation.csproj" />
   <Project Path="L2.Admin.ReadModel/L2.Admin.ReadModel.csproj" />
 </Solution>
