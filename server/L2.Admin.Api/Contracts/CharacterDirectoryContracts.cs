@@ -1,4 +1,4 @@
-namespace L2.Admin.Contracts;
+namespace L2.Admin.Api.Contracts;
 
 public sealed record CharacterSummary(
     Guid Id,

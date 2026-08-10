@@ -1,6 +1,6 @@
 # L2 Admin Web
 
-The Nuxt web interface for L2 live operations, account support, and character administration.
+The L2 Admin product: a Nuxt web interface and a .NET Admin API for live operations, account support, and character administration.
 
 ## Prerequisites
 
