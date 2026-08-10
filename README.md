@@ -43,6 +43,8 @@ cd web && npm run build
 dotnet build server/L2.Admin.slnx
 ```
 
+The Admin API uses the Admin-owned read model to query narrow account and character projections. It does not import Server entities, `DbContext` classes, migrations, or domain services.
+
 ## Dependencies
 
 Admin consumes an explicit GitHub Packages release of `@l2/ui`. Update it deliberately and commit the resulting `package-lock.json`.
