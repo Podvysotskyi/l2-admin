@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="../L2.Admin.Repositories.Interfaces/L2.Admin.Repositories.Interfaces.csproj" />
+    <ProjectReference Include="../L2.Admin.Repositories/L2.Admin.Repositories.csproj" />
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+</Project>

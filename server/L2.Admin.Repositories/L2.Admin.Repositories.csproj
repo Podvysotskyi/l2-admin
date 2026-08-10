@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../L2.Admin.Contracts/L2.Admin.Contracts.csproj" />
+    <ProjectReference Include="../L2.Admin.Exceptions/L2.Admin.Exceptions.csproj" />
+    <ProjectReference Include="../L2.Admin.Repositories.Interfaces/L2.Admin.Repositories.Interfaces.csproj" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="SqlKata" />
+    <PackageReference Include="SqlKata.Execution" />
+  </ItemGroup>
+</Project>

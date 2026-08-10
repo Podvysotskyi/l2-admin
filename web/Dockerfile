@@ -3,8 +3,7 @@ FROM node:24-bookworm-slim
 
 WORKDIR /workspace
 COPY . .
-RUN --mount=type=secret,id=npm_token \
-  sh -c 'NODE_AUTH_TOKEN="$(cat /run/secrets/npm_token)" npm install'
+RUN npm ci
 
 EXPOSE 3002
 CMD ["npm", "run", "dev"]

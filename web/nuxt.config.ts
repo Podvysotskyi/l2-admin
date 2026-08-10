@@ -8,11 +8,11 @@ export default defineNuxtConfig({
   dir: {
     public:
       process.env.L2_PUBLIC_ASSETS_DIR ??
-      fileURLToPath(new URL('./assets', import.meta.url))
+      fileURLToPath(new URL('./public', import.meta.url))
   },
-  runtimeConfig: {
-    public: {
-      apiBase: process.env.NUXT_PUBLIC_ADMIN_API_BASE ?? 'http://localhost:5201'
+  routeRules: {
+    '/api/**': {
+      proxy: `${process.env.NUXT_ADMIN_API_BASE ?? 'http://localhost:5201'}/api/**`
     }
   },
   typescript: { typeCheck: true }
