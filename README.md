@@ -26,10 +26,10 @@ NUXT_PUBLIC_ADMIN_API_BASE=http://localhost:5201 npm run dev
 
 ## Docker Compose
 
-Container orchestration is owned by [`l2-infra`](https://github.com/Podvysotskyi/l2-infra). From that repository, run:
+Run the repository-local Compose stack:
 
 ```sh
-docker compose -f compose/admin.yaml up --build
+docker compose up --build
 ```
 
 Do not commit original game files.
