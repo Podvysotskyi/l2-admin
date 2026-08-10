@@ -1,9 +1,12 @@
+name: l2-admin
+
 services:
   admin:
+    image: l2-admin:dev
     build:
       context: ./web
       secrets: [npm_token]
-    ports: ['3002:3002']
+    ports: ['127.0.0.1:3002:3002']
     environment:
       NUXT_PUBLIC_ADMIN_API_BASE: ${NUXT_PUBLIC_ADMIN_API_BASE:-http://localhost:5201}
 
