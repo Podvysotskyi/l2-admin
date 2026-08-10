@@ -13,6 +13,7 @@ The L2 Admin product: a Nuxt web interface and a .NET Admin API for live operati
 
 ```sh
 export NODE_AUTH_TOKEN="$(gh auth token)"
+cd web
 npm ci
 npm run dev
 ```
@@ -36,9 +37,10 @@ Do not commit original game files.
 ## Checks
 
 ```sh
-npm test
-npm run typecheck
-npm run build
+cd web && npm test
+cd web && npm run typecheck
+cd web && npm run build
+dotnet build server/L2.Admin.slnx
 ```
 
 ## Dependencies

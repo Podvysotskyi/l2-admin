@@ -2,15 +2,16 @@
 
 ## Scope
 
-This repository owns only the Admin Nuxt frontend. Authorization, operational actions, audit records, and all persistence remain backend responsibilities.
+This repository owns the Admin Nuxt frontend and Admin API/read-model projects. Server-owned identity, character, and content persistence remain outside this repository.
 
 ## Commands
 
 ```sh
-npm ci
-npm test
-npm run typecheck
-npm run build
+cd web && npm ci
+cd web && npm test
+cd web && npm run typecheck
+cd web && npm run build
+dotnet build server/L2.Admin.slnx
 ```
 
 Use `NODE_AUTH_TOKEN` for private package installation. Container orchestration lives in the `l2-infra` repository.

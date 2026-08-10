@@ -1,8 +1,0 @@
-<Solution>
-  <Folder Name="/server/">
-    <Project Path="server/L2.Admin.Api.Tests/L2.Admin.Api.Tests.csproj" />
-    <Project Path="server/L2.Admin.Api/L2.Admin.Api.csproj" />
-
-    <Project Path="server/L2.Admin.ReadModel/L2.Admin.ReadModel.csproj" />
-  </Folder>
-</Solution>
