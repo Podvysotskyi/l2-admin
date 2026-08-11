@@ -68,7 +68,7 @@ The web `validate` target installs locked dependencies, runs Vitest, type-checks
 
 ## Codex skills
 
-When this repository is checked out through `l2-infra`, use `$develop-l2-admin-web` for Nuxt work and `$develop-l2-admin-api` for API work. Each skill runs its owning Docker `validate` target. Use both skills plus the Compose commands above for a full-product validation; a separate check-only skill is intentionally unnecessary.
+When this repository is checked out through `l2-infra`, use `$develop-l2-admin` for Nuxt, API, contract, and full-product work. The skill selects the relevant Docker `validate` targets and adds the Compose checks for changes that cross the browser/API boundary.
 
 Do not commit production connection strings, administrator credentials, tokens, original game files, or generated private assets.
 
