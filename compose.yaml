@@ -8,7 +8,7 @@ services:
       dockerfile: server/Dockerfile
       target: production
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_ENVIRONMENT: Development
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     healthcheck:
