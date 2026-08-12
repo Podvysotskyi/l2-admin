@@ -3,6 +3,7 @@ import type { CharacterStatus } from './character-status'
 export interface CharacterSummary {
   id: string
   name: string
+  gameVersion: string
   accountId: string
   username: string | null
   raceId: number

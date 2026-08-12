@@ -49,6 +49,11 @@ The API container uses `server/src/L2.Admin.Api/appsettings.Development.json` an
 
 The Nuxt server proxies all browser `/api` requests to the Admin API. Browser code never calls the upstream API directly.
 
+The global game-version selector scopes character directory reads to Chronicle
+1, Chronicle 4, or Interlude. Account directory data remains global. Admin
+discovers versions from the Server-owned `game_versions` table through its
+read-only repository and never owns that schema.
+
 Separate GitHub workflows validate the web application, API, and Compose model. Pull requests and `main` pushes only validate. The Compose workflow parses the model and builds both development images. Pushing a `v*` tag validates both applications and then publishes `ghcr.io/podvysotskyi/l2-admin` and `ghcr.io/podvysotskyi/l2-admin-api` with the Git tag and `latest` tags.
 
 The published web image is built from `.env.production` and runs its compiled Nuxt server. The published API image starts `L2.Admin.Api.dll`, defaults to `ASPNETCORE_ENVIRONMENT=Production`, and loads `appsettings.Production.json`; deployment environment variables may override those values through standard ASP.NET Core configuration. Both runtime images run as non-root users.

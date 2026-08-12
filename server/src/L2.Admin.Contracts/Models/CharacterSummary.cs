@@ -3,6 +3,7 @@ namespace L2.Admin.Contracts;
 public sealed record CharacterSummary(
     Guid Id,
     string Name,
+    string GameVersion,
     Guid AccountId,
     string? Username,
     int RaceId,

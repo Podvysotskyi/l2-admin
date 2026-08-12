@@ -3,6 +3,12 @@ import type { CharacterDirectoryRequest } from '../types/requests/character-dire
 import type { AccountDirectoryResponse } from '../types/responses/account-directory-response'
 import type { AdminServiceInfo } from '../types/responses/admin-service-info'
 import type { CharacterDirectoryResponse } from '../types/responses/character-directory-response'
+import type { GameVersionSummary } from '../types/models/game-version'
+import { selectedGameVersionKey } from '../utils/game-version'
+
+export function getGameVersions(): Promise<GameVersionSummary[]> {
+  return $fetch<GameVersionSummary[]>('/api/game-versions')
+}
 
 export function getAdminServiceInfo(): Promise<AdminServiceInfo> {
   return $fetch<AdminServiceInfo>('/api/system/info')
@@ -20,7 +26,10 @@ export function searchCharacters(
   request: CharacterDirectoryRequest = {}
 ): Promise<CharacterDirectoryResponse> {
   return $fetch<CharacterDirectoryResponse>('/api/characters', {
-    query: directoryQuery(request)
+    query: {
+      ...directoryQuery(request),
+      gameVersion: request.gameVersion ?? selectedGameVersionKey()
+    }
   })
 }
 

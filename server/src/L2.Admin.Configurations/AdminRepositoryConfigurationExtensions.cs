@@ -18,6 +18,7 @@ public static class AdminRepositoryConfigurationExtensions
         services.AddSingleton<TimeProvider>(TimeProvider.System);
         services.AddSingleton<IAccountDirectoryRepository, AccountDirectoryRepository>();
         services.AddSingleton<ICharacterDirectoryRepository, CharacterDirectoryRepository>();
+        services.AddSingleton<IGameVersionRepository, GameVersionRepository>();
         return services;
     }
 }

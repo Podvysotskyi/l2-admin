@@ -16,6 +16,7 @@ public sealed class CharactersControllerTests
 
         var result = await controller.SearchAsync(new CharacterDirectoryRequest
         {
+            GameVersion = "c1",
             Query = "aria",
             Page = 2,
             PageSize = 50
@@ -24,6 +25,7 @@ public sealed class CharactersControllerTests
         var ok = Assert.IsType<OkObjectResult>(result.Result);
         Assert.Same(expected, ok.Value);
         Assert.Equal("aria", repository.Query);
+        Assert.Equal("c1", repository.GameVersion);
         Assert.Equal(2, repository.Page);
         Assert.Equal(50, repository.PageSize);
         Assert.Equal(cancellation.Token, repository.CancellationToken);
@@ -39,5 +41,6 @@ public sealed class CharactersControllerTests
         await controller.SearchAsync(new CharacterDirectoryRequest());
 
         Assert.Equal(string.Empty, repository.Query);
+        Assert.Equal("interlude", repository.GameVersion);
     }
 }

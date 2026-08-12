@@ -14,6 +14,7 @@ public sealed class CharacterDirectoryRepositoryTests
     {
         var query = CharacterDirectoryRepository.BuildQuery(
             new Query("player.characters as character"),
+            "c1",
             "OWNER@EXAMPLE.COM");
 
         var result = new PostgresCompiler().Compile(query);
@@ -24,6 +25,7 @@ public sealed class CharacterDirectoryRepositoryTests
         Assert.Contains("player_classes", result.Sql, StringComparison.Ordinal);
         Assert.Contains("normalized_name", result.Sql, StringComparison.Ordinal);
         Assert.Contains("normalized_email", result.Sql, StringComparison.Ordinal);
+        Assert.Contains(result.Bindings, binding => Equals(binding, "c1"));
         Assert.Contains(result.Bindings, binding => Equals(binding, "%OWNER@EXAMPLE.COM%"));
     }
 
@@ -61,6 +63,7 @@ public sealed class CharacterDirectoryRepositoryTests
     {
         Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
         Name = "Hero",
+        GameVersion = "c1",
         AccountId = Guid.Parse("00000000-0000-0000-0000-000000000001"),
         Username = "Owner",
         RaceId = 0,

@@ -19,6 +19,13 @@ public sealed class ValidateCharacterDirectoryRequestAttribute : ActionFilterAtt
 
         request.Query = request.Query?.Trim();
         var errors = new Dictionary<string, string[]>();
+        if (string.IsNullOrWhiteSpace(request.GameVersion) ||
+            request.GameVersion.Length > 32 ||
+            request.GameVersion.Any(character =>
+                !char.IsAsciiLetterLower(character) && !char.IsAsciiDigit(character) && character != '-'))
+        {
+            errors["gameVersion"] = ["Game version must be a valid lowercase key."];
+        }
         if (request.Query?.Length > 254)
         {
             errors["query"] = ["Search terms must contain 254 characters or fewer."];

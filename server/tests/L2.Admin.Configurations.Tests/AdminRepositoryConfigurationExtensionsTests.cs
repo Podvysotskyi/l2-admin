@@ -43,5 +43,7 @@ public sealed class AdminRepositoryConfigurationExtensionsTests
             provider.GetRequiredService<IAccountDirectoryRepository>());
         Assert.IsType<CharacterDirectoryRepository>(
             provider.GetRequiredService<ICharacterDirectoryRepository>());
+        Assert.IsType<GameVersionRepository>(
+            provider.GetRequiredService<IGameVersionRepository>());
     }
 }

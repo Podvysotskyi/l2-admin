@@ -4,6 +4,7 @@ internal sealed class CharacterRow
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
+    public string GameVersion { get; set; } = string.Empty;
     public Guid AccountId { get; set; }
     public string? Username { get; set; }
     public int RaceId { get; set; }

@@ -16,6 +16,7 @@ public sealed class CharactersController(ICharacterDirectoryRepository repositor
         CancellationToken cancellationToken = default)
     {
         return Ok(await repository.SearchAsync(
+            request.GameVersion,
             request.Query ?? string.Empty,
             request.Page,
             request.PageSize,

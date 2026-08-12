@@ -14,6 +14,7 @@ public sealed class CharacterDirectoryRepository(
     TimeProvider timeProvider) : ICharacterDirectoryRepository
 {
     public async Task<CharacterDirectoryResponse> SearchAsync(
+        string gameVersion,
         string query,
         int page,
         int pageSize,
@@ -28,6 +29,7 @@ public sealed class CharacterDirectoryRepository(
             using var database = new QueryFactory(connection, new PostgresCompiler());
             var directoryQuery = BuildQuery(
                 database.Query("player.characters as character"),
+                gameVersion,
                 normalizedQuery);
 
             var result = await directoryQuery.PaginateAsync<CharacterRow>(
@@ -43,23 +45,30 @@ public sealed class CharacterDirectoryRepository(
         }
     }
 
-    internal static Query BuildQuery(Query directoryQuery, string normalizedQuery)
+    internal static Query BuildQuery(Query directoryQuery, string gameVersion, string normalizedQuery)
     {
         directoryQuery
             .LeftJoin("accounts as account", "account.id", "character.account_id")
-            .LeftJoin("content.player_races as race", "race.id", "character.player_race_id")
-            .LeftJoin("content.player_sexes as sex", "sex.id", "character.player_sex_id")
+            .LeftJoin("content.player_races as race", join => join
+                .On("race.id", "character.player_race_id")
+                .On("race.game_version", "character.game_version"))
+            .LeftJoin("content.player_sexes as sex", join => join
+                .On("sex.id", "character.player_sex_id")
+                .On("sex.game_version", "character.game_version"))
             .LeftJoin("content.player_classes as base_class", join => join
                 .On("base_class.id", "character.base_class_id")
+                .On("base_class.game_version", "character.game_version")
                 .On("base_class.player_race_id", "character.player_race_id")
                 .On("base_class.player_sex_id", "character.player_sex_id"))
             .LeftJoin("content.player_classes as active_class", join => join
                 .On("active_class.id", "character.active_class_id")
+                .On("active_class.game_version", "character.game_version")
                 .On("active_class.player_race_id", "character.player_race_id")
                 .On("active_class.player_sex_id", "character.player_sex_id"))
             .Select(
                 "character.id as Id",
                 "character.name as Name",
+                "character.game_version as GameVersion",
                 "character.account_id as AccountId",
                 "account.username as Username",
                 "character.player_race_id as RaceId",
@@ -75,7 +84,8 @@ public sealed class CharacterDirectoryRepository(
                 "character.created_at as CreatedAt",
                 "character.delete_after as DeleteAfter")
             .OrderByDesc("character.created_at")
-            .OrderByDesc("character.id");
+            .OrderByDesc("character.id")
+            .Where("character.game_version", gameVersion);
 
         if (normalizedQuery.Length > 0)
         {
@@ -97,6 +107,7 @@ public sealed class CharacterDirectoryRepository(
         return new CharacterSummary(
             character.Id,
             character.Name,
+            character.GameVersion,
             character.AccountId,
             character.Username,
             character.RaceId,

@@ -3,9 +3,11 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useSystemStore } from '../stores/system'
+import { useGameVersionStore } from '../stores/game-version'
 
 const route = useRoute()
 const systemStore = useSystemStore()
+const gameVersionStore = useGameVersionStore()
 const { serviceState: connectionState } = storeToRefs(systemStore)
 
 const routeTitle = computed(() =>
@@ -23,7 +25,10 @@ const statusColor = computed<'success' | 'error' | 'neutral'>(() =>
       : 'neutral'
 )
 
-onMounted(() => void systemStore.load().catch(() => undefined))
+onMounted(() => {
+  void systemStore.load().catch(() => undefined)
+  void gameVersionStore.load().catch(() => undefined)
+})
 </script>
 
 <template>
@@ -34,6 +39,14 @@ onMounted(() => void systemStore.load().catch(() => undefined))
       <template #header>
         <UDashboardNavbar :title="routeTitle" icon="i-lucide-shield-check">
           <template #right>
+            <USelect
+              :model-value="gameVersionStore.selected"
+              :items="gameVersionStore.options"
+              :loading="gameVersionStore.loading"
+              aria-label="Game version"
+              class="w-40"
+              @update:model-value="value => gameVersionStore.select(value as string)"
+            />
             <UBadge
               :color="statusColor"
               variant="subtle"

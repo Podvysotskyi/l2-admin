@@ -46,7 +46,7 @@ describe('Admin API service', () => {
     await searchCharacters({ query: '   ' })
 
     expect(fetchMock).toHaveBeenCalledWith('/api/characters', {
-      query: { page: 1, pageSize: 25 }
+      query: { page: 1, pageSize: 25, gameVersion: 'interlude' }
     })
   })
 })
