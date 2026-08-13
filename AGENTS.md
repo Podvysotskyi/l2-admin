@@ -22,7 +22,7 @@ docker compose build
 
 Do not run development, checks, or builds with host-installed Node.js, npm, or .NET tooling.
 
-Run the Admin-only development stack from this repository with `docker compose up --build`. Admin is intentionally absent from the root `l2-infra` Compose stack.
+Run the Admin-only development stack from this repository with `docker compose up --build`. The parent integration repository has no combined Compose model.
 
 ## Server Architecture
 
