@@ -1,6 +1,7 @@
 using L2.Admin.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -42,6 +43,23 @@ public sealed class AdminApiConfigurationExtensionsTests
         Assert.Contains("*", policy.Headers);
         Assert.Contains("*", policy.Methods);
         Assert.True(policy.SupportsCredentials);
+    }
+
+    [Fact]
+    public async Task AddAdminApi_configures_http_request_logging()
+    {
+        var builder = CreateBuilder();
+        builder.AddAdminApi("l2-admin-api");
+        await using var app = builder.Build();
+
+        var options = app.Services.GetRequiredService<IOptions<HttpLoggingOptions>>().Value;
+
+        Assert.Equal(
+            HttpLoggingFields.RequestProperties |
+            HttpLoggingFields.ResponseStatusCode |
+            HttpLoggingFields.Duration,
+            options.LoggingFields);
+        Assert.Single(app.Services.GetServices<IHttpLoggingInterceptor>());
     }
 
     [Fact]
