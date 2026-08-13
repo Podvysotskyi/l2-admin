@@ -6,6 +6,9 @@ This repository owns the internal L2 Admin product: the Nuxt web application, AS
 
 The Admin service reads the external Game Server database. It does not own a database, migrations, or authoritative gameplay state.
 
+Keep [docs/architecture.md](docs/architecture.md) aligned when these ownership or
+data-flow boundaries change.
+
 ## Commands
 
 Run development, every check, and every build through Docker from the repository root:

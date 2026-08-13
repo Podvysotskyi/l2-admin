@@ -2,6 +2,9 @@
 
 Internal administration product for L2 live operations. It combines a Nuxt web interface with a read-only ASP.NET Core API for account and character directories.
 
+See [docs/architecture.md](docs/architecture.md) for the product boundaries and
+request flow.
+
 ## Architecture
 
 The API is split into focused .NET projects:
